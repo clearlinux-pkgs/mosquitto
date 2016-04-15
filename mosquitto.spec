@@ -4,7 +4,7 @@
 #
 Name     : mosquitto
 Version  : 1.4.8
-Release  : 1
+Release  : 2
 URL      : https://github.com/eclipse/mosquitto/archive/v1.4.8.tar.gz
 Source0  : https://github.com/eclipse/mosquitto/archive/v1.4.8.tar.gz
 Summary  : No detailed summary available
@@ -51,6 +51,7 @@ lib components for the mosquitto package.
 
 
 %prep
+cd ..
 %setup -q -n mosquitto-1.4.8
 %patch1 -p1
 %patch2 -p1
@@ -67,6 +68,13 @@ rm -rf %{buildroot}
 pushd clr-build
 %make_install
 popd
+## make_install_append content
+mkdir %{buildroot}/usr/lib64
+ln -s /usr/lib/libmosquitto.so %{buildroot}/usr/lib64/libmosquitto.so
+ln -s /usr/lib/libmosquitto.so.1 %{buildroot}/usr/lib64/libmosquitto.so.1
+ln -s /usr/lib/libmosquittopp.so %{buildroot}/usr/lib64/libmosquittopp.so
+ln -s /usr/lib/libmosquittopp.so.1 %{buildroot}/usr/lib64/libmosquittopp.so.1
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -82,7 +90,9 @@ popd
 %defattr(-,root,root,-)
 /usr/include/*.h
 /usr/lib/*.so
+/usr/lib64/*.so
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib/*.so.*
+/usr/lib64/*.so.*
