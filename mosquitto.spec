@@ -4,7 +4,7 @@
 #
 Name     : mosquitto
 Version  : 1.4.9
-Release  : 7
+Release  : 8
 URL      : https://github.com/eclipse/mosquitto/archive/v1.4.9.tar.gz
 Source0  : https://github.com/eclipse/mosquitto/archive/v1.4.9.tar.gz
 Summary  : No detailed summary available
