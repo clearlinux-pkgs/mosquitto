@@ -1,5 +1,0 @@
-mkdir %{buildroot}/usr/lib64
-ln -s /usr/lib/libmosquitto.so %{buildroot}/usr/lib64/libmosquitto.so
-ln -s /usr/lib/libmosquitto.so.1 %{buildroot}/usr/lib64/libmosquitto.so.1
-ln -s /usr/lib/libmosquittopp.so %{buildroot}/usr/lib64/libmosquittopp.so
-ln -s /usr/lib/libmosquittopp.so.1 %{buildroot}/usr/lib64/libmosquittopp.so.1

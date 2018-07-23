@@ -16,35 +16,35 @@ diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
 index 32a04b4..6ab486e 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
-@@ -74,5 +74,5 @@ install(TARGETS libmosquitto RUNTIME DESTINATION ${BINDIR} LIBRARY DESTINATION $
- install(FILES mosquitto.h DESTINATION ${INCLUDEDIR})
+@@ -135,5 +135,5 @@ install(TARGETS libmosquitto RUNTIME DESTINATION ${BINDIR} LIBRARY DESTINATION $
+ install(FILES mosquitto.h DESTINATION "${INCLUDEDIR}")
  
- if (UNIX)
+ if (UNIX AND NOT APPLE)
 -	install(CODE "EXEC_PROGRAM(/sbin/ldconfig)")
 +	install(CODE "")
- endif (UNIX)
+ endif (UNIX AND NOT APPLE)
 diff --git a/lib/cpp/CMakeLists.txt b/lib/cpp/CMakeLists.txt
 index 0a9fd91..4c6b8cf 100644
 --- a/lib/cpp/CMakeLists.txt
 +++ b/lib/cpp/CMakeLists.txt
-@@ -14,5 +14,5 @@ install(TARGETS mosquittopp RUNTIME DESTINATION ${BINDIR} LIBRARY DESTINATION ${
- install(FILES mosquittopp.h DESTINATION ${INCLUDEDIR})
+@@ -43,5 +43,5 @@ install(TARGETS mosquittopp RUNTIME DESTINATION ${BINDIR} LIBRARY DESTINATION ${
+ install(FILES mosquittopp.h DESTINATION "${INCLUDEDIR}")
  
- if (UNIX)
+ if (UNIX AND NOT APPLE)
 -	install(CODE "EXEC_PROGRAM(/sbin/ldconfig)")
 +	install(CODE "")
- endif (UNIX)
+ endif (UNIX AND NOT APPLE)
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index 5bebeed..5af9168 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -127,6 +127,6 @@ if (${WITH_TLS} STREQUAL ON)
+@@ -176,6 +176,6 @@ if (${WITH_TLS} STREQUAL ON)
  endif (${WITH_TLS} STREQUAL ON)
  
- if (UNIX)
+ if (UNIX AND NOT APPLE)
 -	install(CODE "EXEC_PROGRAM(/sbin/ldconfig)")
 +	install(CODE "")
- endif (UNIX)
+ endif (UNIX AND NOT APPLE)
  
 -- 
 2.7.1
