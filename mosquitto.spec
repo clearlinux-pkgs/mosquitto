@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.5
-Release  : 10
-URL      : http://mosquitto.org/files/source/mosquitto-1.5.tar.gz
-Source0  : http://mosquitto.org/files/source/mosquitto-1.5.tar.gz
-Source99 : http://mosquitto.org/files/source/mosquitto-1.5.tar.gz.asc
+Version  : 1.5.1
+Release  : 11
+URL      : http://mosquitto.org/files/source/mosquitto-1.5.1.tar.gz
+Source0  : http://mosquitto.org/files/source/mosquitto-1.5.1.tar.gz
+Source99 : http://mosquitto.org/files/source/mosquitto-1.5.1.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : EPL-1.0
@@ -75,7 +75,7 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.5
+%setup -q -n mosquitto-1.5.1
 %patch1 -p1
 
 %build
@@ -83,7 +83,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532379681
+export SOURCE_DATE_EPOCH=1534711466
 mkdir clr-build
 pushd clr-build
 %cmake ..
@@ -91,7 +91,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1532379681
+export SOURCE_DATE_EPOCH=1534711466
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/doc/mosquitto/LICENSE.txt
@@ -116,13 +116,14 @@ popd
 /usr/lib64/libmosquittopp.so
 /usr/lib64/pkgconfig/libmosquitto.pc
 /usr/lib64/pkgconfig/libmosquittopp.pc
+/usr/share/man/man3/libmosquitto.3
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.5.0
+/usr/lib64/libmosquitto.so.1.5.1
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.5.0
+/usr/lib64/libmosquittopp.so.1.5.1
 
 %files license
 %defattr(-,root,root,-)
@@ -133,7 +134,6 @@ popd
 /usr/share/man/man1/mosquitto_passwd.1
 /usr/share/man/man1/mosquitto_pub.1
 /usr/share/man/man1/mosquitto_sub.1
-/usr/share/man/man3/libmosquitto.3
 /usr/share/man/man5/mosquitto.conf.5
 /usr/share/man/man7/mosquitto-tls.7
 /usr/share/man/man7/mqtt.7
