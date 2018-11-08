@@ -5,18 +5,18 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.5.3
-Release  : 14
-URL      : http://mosquitto.org/files/source/mosquitto-1.5.3.tar.gz
-Source0  : http://mosquitto.org/files/source/mosquitto-1.5.3.tar.gz
-Source99 : http://mosquitto.org/files/source/mosquitto-1.5.3.tar.gz.asc
+Version  : 1.5.4
+Release  : 15
+URL      : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz
+Source0  : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz
+Source99 : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : EPL-1.0
-Requires: mosquitto-bin
-Requires: mosquitto-lib
-Requires: mosquitto-license
-Requires: mosquitto-man
+Requires: mosquitto-bin = %{version}-%{release}
+Requires: mosquitto-lib = %{version}-%{release}
+Requires: mosquitto-license = %{version}-%{release}
+Requires: mosquitto-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : openssl-dev
 Patch1: 0001-Remove-ldconfig.patch
@@ -27,6 +27,14 @@ enabled WITH_SYSTEMD, use mosquitto.service.notify, otherwise use
 mosquitto.service.simple. The service must be renamed to mosquitto.service
 before usage. Don't forget to change default paths in service file if you
 changed the default build settings.
+
+%package abi
+Summary: abi components for the mosquitto package.
+Group: Default
+
+%description abi
+abi components for the mosquitto package.
+
 
 %package bin
 Summary: bin components for the mosquitto package.
@@ -75,7 +83,7 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.5.3
+%setup -q -n mosquitto-1.5.4
 %patch1 -p1
 
 %build
@@ -83,24 +91,31 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1538062162
+export SOURCE_DATE_EPOCH=1541699118
 mkdir -p clr-build
 pushd clr-build
 %cmake ..
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1538062162
+export SOURCE_DATE_EPOCH=1541699118
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/mosquitto
-cp LICENSE.txt %{buildroot}/usr/share/doc/mosquitto/LICENSE.txt
+mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
+cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
 pushd clr-build
 %make_install
 popd
 
 %files
 %defattr(-,root,root,-)
+
+%files abi
+%defattr(-,root,root,-)
+/usr/share/abi/libmosquitto.so.1.5.4.abi
+/usr/share/abi/libmosquitto.so.1.abi
+/usr/share/abi/libmosquittopp.so.1.5.4.abi
+/usr/share/abi/libmosquittopp.so.1.abi
 
 %files bin
 %defattr(-,root,root,-)
@@ -121,16 +136,16 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.5.3
+/usr/lib64/libmosquitto.so.1.5.4
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.5.3
+/usr/lib64/libmosquittopp.so.1.5.4
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/doc/mosquitto/LICENSE.txt
+/usr/share/package-licenses/mosquitto/LICENSE.txt
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/mosquitto_passwd.1
 /usr/share/man/man1/mosquitto_pub.1
 /usr/share/man/man1/mosquitto_sub.1
