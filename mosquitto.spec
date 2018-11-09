@@ -6,7 +6,7 @@
 #
 Name     : mosquitto
 Version  : 1.5.4
-Release  : 15
+Release  : 16
 URL      : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz
 Source0  : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz
 Source99 : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz.asc
@@ -91,7 +91,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541699118
+export SOURCE_DATE_EPOCH=1541748287
 mkdir -p clr-build
 pushd clr-build
 %cmake ..
@@ -99,7 +99,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1541699118
+export SOURCE_DATE_EPOCH=1541748287
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
@@ -113,9 +113,7 @@ popd
 %files abi
 %defattr(-,root,root,-)
 /usr/share/abi/libmosquitto.so.1.5.4.abi
-/usr/share/abi/libmosquitto.so.1.abi
 /usr/share/abi/libmosquittopp.so.1.5.4.abi
-/usr/share/abi/libmosquittopp.so.1.abi
 
 %files bin
 %defattr(-,root,root,-)
