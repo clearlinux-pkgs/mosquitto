@@ -6,7 +6,7 @@
 #
 Name     : mosquitto
 Version  : 1.5.4
-Release  : 16
+Release  : 17
 URL      : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz
 Source0  : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz
 Source99 : http://mosquitto.org/files/source/mosquitto-1.5.4.tar.gz.asc
