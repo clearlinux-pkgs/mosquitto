@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.5.8
-Release  : 21
-URL      : http://mosquitto.org/files/source/mosquitto-1.5.8.tar.gz
-Source0  : http://mosquitto.org/files/source/mosquitto-1.5.8.tar.gz
-Source99 : http://mosquitto.org/files/source/mosquitto-1.5.8.tar.gz.asc
+Version  : 1.6.0
+Release  : 22
+URL      : http://mosquitto.org/files/source/mosquitto-1.6.0.tar.gz
+Source0  : http://mosquitto.org/files/source/mosquitto-1.6.0.tar.gz
+Source99 : http://mosquitto.org/files/source/mosquitto-1.6.0.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : EPL-1.0
@@ -19,6 +19,8 @@ Requires: mosquitto-license = %{version}-%{release}
 Requires: mosquitto-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : openssl-dev
+BuildRequires : pkg-config
+BuildRequires : pkgconfig(automotive-dlt)
 Patch1: 0001-Remove-ldconfig.patch
 
 %description
@@ -32,7 +34,6 @@ changed the default build settings.
 Summary: bin components for the mosquitto package.
 Group: Binaries
 Requires: mosquitto-license = %{version}-%{release}
-Requires: mosquitto-man = %{version}-%{release}
 
 %description bin
 bin components for the mosquitto package.
@@ -44,6 +45,7 @@ Group: Development
 Requires: mosquitto-lib = %{version}-%{release}
 Requires: mosquitto-bin = %{version}-%{release}
 Provides: mosquitto-devel = %{version}-%{release}
+Requires: mosquitto = %{version}-%{release}
 
 %description dev
 dev components for the mosquitto package.
@@ -75,7 +77,7 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.5.8
+%setup -q -n mosquitto-1.6.0
 %patch1 -p1
 
 %build
@@ -83,7 +85,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1553558440
+export SOURCE_DATE_EPOCH=1555629635
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -92,7 +94,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1553558440
+export SOURCE_DATE_EPOCH=1555629635
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
@@ -108,6 +110,7 @@ popd
 /usr/bin/mosquitto
 /usr/bin/mosquitto_passwd
 /usr/bin/mosquitto_pub
+/usr/bin/mosquitto_rr
 /usr/bin/mosquitto_sub
 
 %files dev
@@ -122,9 +125,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.5.8
+/usr/lib64/libmosquitto.so.1.6.0
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.5.8
+/usr/lib64/libmosquittopp.so.1.6.0
 
 %files license
 %defattr(0644,root,root,0755)
@@ -134,6 +137,7 @@ popd
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/mosquitto_passwd.1
 /usr/share/man/man1/mosquitto_pub.1
+/usr/share/man/man1/mosquitto_rr.1
 /usr/share/man/man1/mosquitto_sub.1
 /usr/share/man/man5/mosquitto.conf.5
 /usr/share/man/man7/mosquitto-tls.7

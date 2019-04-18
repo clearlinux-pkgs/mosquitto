@@ -1,5 +1,5 @@
 PKG_NAME := mosquitto
-URL = http://mosquitto.org/files/source/mosquitto-1.5.8.tar.gz
+URL = http://mosquitto.org/files/source/mosquitto-1.6.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
