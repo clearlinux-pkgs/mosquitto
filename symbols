@@ -157,6 +157,7 @@ libmosquitto.so.1:net__write
 libmosquitto.so.1:packet__alloc
 libmosquitto.so.1:packet__check_oversize
 libmosquitto.so.1:packet__cleanup
+libmosquitto.so.1:packet__cleanup_all
 libmosquitto.so.1:packet__queue
 libmosquitto.so.1:packet__read
 libmosquitto.so.1:packet__read_binary
