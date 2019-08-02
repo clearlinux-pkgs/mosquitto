@@ -6,7 +6,7 @@
 #
 Name     : mosquitto
 Version  : 1.6.4
-Release  : 25
+Release  : 26
 URL      : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz
 Source0  : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz
 Source1 : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz.asc
@@ -22,6 +22,7 @@ BuildRequires : buildreq-cmake
 BuildRequires : openssl-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(automotive-dlt)
+BuildRequires : systemd-dev
 
 %description
 Select appropriate systemd service based on your compile settings. If you
@@ -93,7 +94,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564704666
+export SOURCE_DATE_EPOCH=1564716906
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -104,7 +105,7 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
-%cmake ..
+%cmake .. -DWITH_SYSTEMD=1
 make  %{?_smp_mflags} VERBOSE=1
 popd
 
@@ -116,7 +117,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1564704666
+export SOURCE_DATE_EPOCH=1564716906
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt

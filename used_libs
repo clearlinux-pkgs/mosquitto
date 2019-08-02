@@ -6,3 +6,4 @@ libpthread.so.0
 librt.so.1
 libssl.so.1.1
 libstdc++.so.6
+libsystemd.so.0
