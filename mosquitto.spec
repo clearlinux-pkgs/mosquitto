@@ -6,7 +6,7 @@
 #
 Name     : mosquitto
 Version  : 1.6.4
-Release  : 26
+Release  : 27
 URL      : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz
 Source0  : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz
 Source1 : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz.asc
@@ -14,7 +14,7 @@ Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : EPL-1.0
 Requires: mosquitto-bin = %{version}-%{release}
-Requires: mosquitto-config = %{version}-%{release}
+Requires: mosquitto-data = %{version}-%{release}
 Requires: mosquitto-lib = %{version}-%{release}
 Requires: mosquitto-license = %{version}-%{release}
 Requires: mosquitto-man = %{version}-%{release}
@@ -34,19 +34,19 @@ changed the default build settings.
 %package bin
 Summary: bin components for the mosquitto package.
 Group: Binaries
-Requires: mosquitto-config = %{version}-%{release}
+Requires: mosquitto-data = %{version}-%{release}
 Requires: mosquitto-license = %{version}-%{release}
 
 %description bin
 bin components for the mosquitto package.
 
 
-%package config
-Summary: config components for the mosquitto package.
-Group: Default
+%package data
+Summary: data components for the mosquitto package.
+Group: Data
 
-%description config
-config components for the mosquitto package.
+%description data
+data components for the mosquitto package.
 
 
 %package dev
@@ -54,6 +54,7 @@ Summary: dev components for the mosquitto package.
 Group: Development
 Requires: mosquitto-lib = %{version}-%{release}
 Requires: mosquitto-bin = %{version}-%{release}
+Requires: mosquitto-data = %{version}-%{release}
 Provides: mosquitto-devel = %{version}-%{release}
 Requires: mosquitto = %{version}-%{release}
 
@@ -64,6 +65,7 @@ dev components for the mosquitto package.
 %package lib
 Summary: lib components for the mosquitto package.
 Group: Libraries
+Requires: mosquitto-data = %{version}-%{release}
 Requires: mosquitto-license = %{version}-%{release}
 
 %description lib
@@ -94,7 +96,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564716906
+export SOURCE_DATE_EPOCH=1564717056
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -117,13 +119,18 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1564716906
+export SOURCE_DATE_EPOCH=1564717056
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
 pushd clr-build
 %make_install
 popd
+## install_append content
+mkdir -p %{buildroot}/usr/share/mosquitto
+mv %{buildroot}/usr/etc/mosquitto/* %{buildroot}/usr/share/mosquitto/
+rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -136,12 +143,12 @@ popd
 /usr/bin/mosquitto_rr
 /usr/bin/mosquitto_sub
 
-%files config
+%files data
 %defattr(-,root,root,-)
-%config /usr/etc/mosquitto/aclfile.example
-%config /usr/etc/mosquitto/mosquitto.conf
-%config /usr/etc/mosquitto/pskfile.example
-%config /usr/etc/mosquitto/pwfile.example
+/usr/share/mosquitto/aclfile.example
+/usr/share/mosquitto/mosquitto.conf
+/usr/share/mosquitto/pskfile.example
+/usr/share/mosquitto/pwfile.example
 
 %files dev
 %defattr(-,root,root,-)
