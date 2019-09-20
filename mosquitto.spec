@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.6.4
-Release  : 27
-URL      : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz
-Source0  : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz
-Source1 : http://mosquitto.org/files/source/mosquitto-1.6.4.tar.gz.asc
+Version  : 1.6.6
+Release  : 28
+URL      : https://mosquitto.org/files/source/mosquitto-1.6.6.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-1.6.6.tar.gz
+Source1 : https://mosquitto.org/files/source/mosquitto-1.6.6.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : EPL-1.0
@@ -89,14 +89,14 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.6.4
+%setup -q -n mosquitto-1.6.6
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564717056
+export SOURCE_DATE_EPOCH=1569007180
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -108,7 +108,7 @@ export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DWITH_SYSTEMD=1
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %check
@@ -119,7 +119,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1564717056
+export SOURCE_DATE_EPOCH=1569007180
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
@@ -152,7 +152,10 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/mosquitto.h
+/usr/include/mosquitto_broker.h
+/usr/include/mosquitto_plugin.h
+/usr/include/mosquittopp.h
 /usr/lib64/libmosquitto.so
 /usr/lib64/libmosquittopp.so
 /usr/lib64/pkgconfig/libmosquitto.pc
@@ -162,9 +165,9 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.6.4
+/usr/lib64/libmosquitto.so.1.6.6
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.6.4
+/usr/lib64/libmosquittopp.so.1.6.6
 
 %files license
 %defattr(0644,root,root,0755)
