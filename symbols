@@ -27,12 +27,14 @@ libmosquitto.so.1:mosquitto__cmp_hostname_wildcard
 libmosquitto.so.1:mosquitto__destroy
 libmosquitto.so.1:mosquitto__fopen
 libmosquitto.so.1:mosquitto__free
+libmosquitto.so.1:mosquitto__get_state
 libmosquitto.so.1:mosquitto__hex2bin
 libmosquitto.so.1:mosquitto__hex2bin_sha1
 libmosquitto.so.1:mosquitto__malloc
 libmosquitto.so.1:mosquitto__mid_generate
 libmosquitto.so.1:mosquitto__realloc
 libmosquitto.so.1:mosquitto__server_certificate_verify
+libmosquitto.so.1:mosquitto__set_state
 libmosquitto.so.1:mosquitto__strdup
 libmosquitto.so.1:mosquitto__thread_main
 libmosquitto.so.1:mosquitto__verify_certificate_hostname

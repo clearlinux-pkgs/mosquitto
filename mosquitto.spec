@@ -5,12 +5,12 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.6.6
-Release  : 28
-URL      : https://mosquitto.org/files/source/mosquitto-1.6.6.tar.gz
-Source0  : https://mosquitto.org/files/source/mosquitto-1.6.6.tar.gz
-Source1 : https://mosquitto.org/files/source/mosquitto-1.6.6.tar.gz.asc
-Summary  : mosquitto MQTT library (C bindings)
+Version  : 1.6.7
+Release  : 29
+URL      : https://mosquitto.org/files/source/mosquitto-1.6.7.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-1.6.7.tar.gz
+Source1 : https://mosquitto.org/files/source/mosquitto-1.6.7.tar.gz.asc
+Summary  : An Open Source MQTT v3.1/v3.1.1 Broker
 Group    : Development/Tools
 License  : EPL-1.0
 Requires: mosquitto-bin = %{version}-%{release}
@@ -57,6 +57,7 @@ Requires: mosquitto-bin = %{version}-%{release}
 Requires: mosquitto-data = %{version}-%{release}
 Provides: mosquitto-devel = %{version}-%{release}
 Requires: mosquitto = %{version}-%{release}
+Requires: mosquitto = %{version}-%{release}
 
 %description dev
 dev components for the mosquitto package.
@@ -89,16 +90,17 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.6.6
+%setup -q -n mosquitto-1.6.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569007180
+export SOURCE_DATE_EPOCH=1570126524
 mkdir -p clr-build
 pushd clr-build
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -119,7 +121,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1569007180
+export SOURCE_DATE_EPOCH=1570126524
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
@@ -165,9 +167,9 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.6.6
+/usr/lib64/libmosquitto.so.1.6.7
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.6.6
+/usr/lib64/libmosquittopp.so.1.6.7
 
 %files license
 %defattr(0644,root,root,0755)
