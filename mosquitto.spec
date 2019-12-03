@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.6.7
-Release  : 29
-URL      : https://mosquitto.org/files/source/mosquitto-1.6.7.tar.gz
-Source0  : https://mosquitto.org/files/source/mosquitto-1.6.7.tar.gz
-Source1 : https://mosquitto.org/files/source/mosquitto-1.6.7.tar.gz.asc
+Version  : 1.6.8
+Release  : 30
+URL      : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz
+Source1 : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz.asc
 Summary  : An Open Source MQTT v3.1/v3.1.1 Broker
 Group    : Development/Tools
 License  : EPL-1.0
@@ -90,14 +90,15 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.6.7
+%setup -q -n mosquitto-1.6.8
+cd %{_builddir}/mosquitto-1.6.8
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570126524
+export SOURCE_DATE_EPOCH=1575383896
 mkdir -p clr-build
 pushd clr-build
 # -Werror is for werrorists
@@ -121,10 +122,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1570126524
+export SOURCE_DATE_EPOCH=1575383896
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
-cp LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/LICENSE.txt
+cp %{_builddir}/mosquitto-1.6.8/LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/c29262248058be3ddc0c84a632afcb317275d738
 pushd clr-build
 %make_install
 popd
@@ -167,13 +168,13 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.6.7
+/usr/lib64/libmosquitto.so.1.6.8
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.6.7
+/usr/lib64/libmosquittopp.so.1.6.8
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/mosquitto/LICENSE.txt
+/usr/share/package-licenses/mosquitto/c29262248058be3ddc0c84a632afcb317275d738
 
 %files man
 %defattr(0644,root,root,0755)
