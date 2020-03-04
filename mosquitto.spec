@@ -6,11 +6,11 @@
 #
 Name     : mosquitto
 Version  : 1.6.8
-Release  : 30
+Release  : 31
 URL      : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz
 Source0  : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz
-Source1 : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz.asc
-Summary  : An Open Source MQTT v3.1/v3.1.1 Broker
+Source1  : https://mosquitto.org/files/source/mosquitto-1.6.8.tar.gz.asc
+Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : EPL-1.0
 Requires: mosquitto-bin = %{version}-%{release}
@@ -20,8 +20,6 @@ Requires: mosquitto-license = %{version}-%{release}
 Requires: mosquitto-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : openssl-dev
-BuildRequires : pkg-config
-BuildRequires : pkgconfig(automotive-dlt)
 BuildRequires : systemd-dev
 
 %description
@@ -56,7 +54,6 @@ Requires: mosquitto-lib = %{version}-%{release}
 Requires: mosquitto-bin = %{version}-%{release}
 Requires: mosquitto-data = %{version}-%{release}
 Provides: mosquitto-devel = %{version}-%{release}
-Requires: mosquitto = %{version}-%{release}
 Requires: mosquitto = %{version}-%{release}
 
 %description dev
@@ -98,10 +95,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575383896
-mkdir -p clr-build
-pushd clr-build
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583341052
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -110,29 +104,19 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
-%cmake .. -DWITH_SYSTEMD=1
-make  %{?_smp_mflags}  VERBOSE=1
-popd
+make  %{?_smp_mflags}  WITH_SYSTEMD=yes
 
-%check
-export LANG=C.UTF-8
-export http_proxy=http://127.0.0.1:9/
-export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost,127.0.0.1,0.0.0.0
-cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1575383896
+export SOURCE_DATE_EPOCH=1583341052
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
 cp %{_builddir}/mosquitto-1.6.8/LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/c29262248058be3ddc0c84a632afcb317275d738
-pushd clr-build
-%make_install
-popd
+%make_install prefix=/usr LIB_SUFFIX=64
 ## install_append content
 mkdir -p %{buildroot}/usr/share/mosquitto
-mv %{buildroot}/usr/etc/mosquitto/* %{buildroot}/usr/share/mosquitto/
-rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
+mv %{buildroot}/etc/mosquitto/* %{buildroot}/usr/share/mosquitto/
+rmdir %{buildroot}/etc/mosquitto %{buildroot}/etc
 ## install_append end
 
 %files
@@ -149,7 +133,7 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 %files data
 %defattr(-,root,root,-)
 /usr/share/mosquitto/aclfile.example
-/usr/share/mosquitto/mosquitto.conf
+/usr/share/mosquitto/mosquitto.conf.example
 /usr/share/mosquitto/pskfile.example
 /usr/share/mosquitto/pwfile.example
 
@@ -159,6 +143,7 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 /usr/include/mosquitto_broker.h
 /usr/include/mosquitto_plugin.h
 /usr/include/mosquittopp.h
+/usr/include/mqtt_protocol.h
 /usr/lib64/libmosquitto.so
 /usr/lib64/libmosquittopp.so
 /usr/lib64/pkgconfig/libmosquitto.pc
@@ -168,9 +153,7 @@ rmdir %{buildroot}/usr/etc/mosquitto %{buildroot}/usr/etc
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libmosquitto.so.1
-/usr/lib64/libmosquitto.so.1.6.8
 /usr/lib64/libmosquittopp.so.1
-/usr/lib64/libmosquittopp.so.1.6.8
 
 %files license
 %defattr(0644,root,root,0755)
