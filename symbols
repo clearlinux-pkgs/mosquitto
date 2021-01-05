@@ -5,6 +5,7 @@ libmosquitto.so.1:MOSQ_1.3
 libmosquitto.so.1:MOSQ_1.4
 libmosquitto.so.1:MOSQ_1.5
 libmosquitto.so.1:MOSQ_1.6
+libmosquitto.so.1:MOSQ_1.7
 libmosquitto.so.1:mosquitto_connack_string
 libmosquitto.so.1:mosquitto_connect
 libmosquitto.so.1:mosquitto_connect_async
@@ -50,7 +51,11 @@ libmosquitto.so.1:mosquitto_property_add_string_pair
 libmosquitto.so.1:mosquitto_property_add_varint
 libmosquitto.so.1:mosquitto_property_check_all
 libmosquitto.so.1:mosquitto_property_check_command
+libmosquitto.so.1:mosquitto_property_copy_all
 libmosquitto.so.1:mosquitto_property_free_all
+libmosquitto.so.1:mosquitto_property_identifier
+libmosquitto.so.1:mosquitto_property_identifier_to_string
+libmosquitto.so.1:mosquitto_property_next
 libmosquitto.so.1:mosquitto_property_read_binary
 libmosquitto.so.1:mosquitto_property_read_byte
 libmosquitto.so.1:mosquitto_property_read_int16
@@ -71,6 +76,7 @@ libmosquitto.so.1:mosquitto_reconnect_delay_set
 libmosquitto.so.1:mosquitto_reinitialise
 libmosquitto.so.1:mosquitto_socket
 libmosquitto.so.1:mosquitto_socks5_set
+libmosquitto.so.1:mosquitto_ssl_get
 libmosquitto.so.1:mosquitto_strerror
 libmosquitto.so.1:mosquitto_string_option
 libmosquitto.so.1:mosquitto_string_to_command

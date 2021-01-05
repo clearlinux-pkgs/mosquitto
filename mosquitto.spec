@@ -5,14 +5,14 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 1.6.12
-Release  : 35
-URL      : https://mosquitto.org/files/source/mosquitto-1.6.12.tar.gz
-Source0  : https://mosquitto.org/files/source/mosquitto-1.6.12.tar.gz
-Source1  : https://mosquitto.org/files/source/mosquitto-1.6.12.tar.gz.asc
+Version  : 2.0.4
+Release  : 36
+URL      : https://mosquitto.org/files/source/mosquitto-2.0.4.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-2.0.4.tar.gz
+Source1  : https://mosquitto.org/files/source/mosquitto-2.0.4.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
-License  : EPL-1.0
+License  : BSD-3-Clause EPL-2.0
 Requires: mosquitto-bin = %{version}-%{release}
 Requires: mosquitto-data = %{version}-%{release}
 Requires: mosquitto-lib = %{version}-%{release}
@@ -20,6 +20,7 @@ Requires: mosquitto-license = %{version}-%{release}
 Requires: mosquitto-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : openssl-dev
+BuildRequires : pkgconfig(libcjson)
 BuildRequires : systemd-dev
 
 %description
@@ -87,15 +88,15 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-1.6.12
-cd %{_builddir}/mosquitto-1.6.12
+%setup -q -n mosquitto-2.0.4
+cd %{_builddir}/mosquitto-2.0.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1597855896
+export SOURCE_DATE_EPOCH=1609864983
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -108,10 +109,11 @@ make  %{?_smp_mflags}  WITH_SYSTEMD=yes
 
 
 %install
-export SOURCE_DATE_EPOCH=1597855896
+export SOURCE_DATE_EPOCH=1609864983
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
-cp %{_builddir}/mosquitto-1.6.12/LICENSE.txt %{buildroot}/usr/share/package-licenses/mosquitto/c29262248058be3ddc0c84a632afcb317275d738
+cp %{_builddir}/mosquitto-2.0.4/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/a8709c8c7e056d82845a30d21f075912aa8a0129
+cp %{_builddir}/mosquitto-2.0.4/epl-v20 %{buildroot}/usr/share/package-licenses/mosquitto/b086d72d0fe9af38418dab524fe76eea3cb1eec3
 %make_install prefix=/usr LIB_SUFFIX=64
 ## install_append content
 mkdir -p %{buildroot}/usr/share/mosquitto
@@ -125,6 +127,7 @@ rmdir %{buildroot}/etc/mosquitto %{buildroot}/etc
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/mosquitto
+/usr/bin/mosquitto_ctrl
 /usr/bin/mosquitto_passwd
 /usr/bin/mosquitto_pub
 /usr/bin/mosquitto_rr
@@ -146,6 +149,7 @@ rmdir %{buildroot}/etc/mosquitto %{buildroot}/etc
 /usr/include/mqtt_protocol.h
 /usr/lib64/libmosquitto.so
 /usr/lib64/libmosquittopp.so
+/usr/lib64/mosquitto_dynamic_security.so
 /usr/lib64/pkgconfig/libmosquitto.pc
 /usr/lib64/pkgconfig/libmosquittopp.pc
 /usr/share/man/man3/libmosquitto.3
@@ -157,10 +161,13 @@ rmdir %{buildroot}/etc/mosquitto %{buildroot}/etc
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/mosquitto/c29262248058be3ddc0c84a632afcb317275d738
+/usr/share/package-licenses/mosquitto/a8709c8c7e056d82845a30d21f075912aa8a0129
+/usr/share/package-licenses/mosquitto/b086d72d0fe9af38418dab524fe76eea3cb1eec3
 
 %files man
 %defattr(0644,root,root,0755)
+/usr/share/man/man1/mosquitto_ctrl.1
+/usr/share/man/man1/mosquitto_ctrl_dynsec.1
 /usr/share/man/man1/mosquitto_passwd.1
 /usr/share/man/man1/mosquitto_pub.1
 /usr/share/man/man1/mosquitto_rr.1
