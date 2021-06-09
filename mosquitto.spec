@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 2.0.10
-Release  : 42
-URL      : https://mosquitto.org/files/source/mosquitto-2.0.10.tar.gz
-Source0  : https://mosquitto.org/files/source/mosquitto-2.0.10.tar.gz
-Source1  : https://mosquitto.org/files/source/mosquitto-2.0.10.tar.gz.asc
+Version  : 2.0.11
+Release  : 43
+URL      : https://mosquitto.org/files/source/mosquitto-2.0.11.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-2.0.11.tar.gz
+Source1  : https://mosquitto.org/files/source/mosquitto-2.0.11.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : BSD-3-Clause EPL-2.0
@@ -88,15 +88,15 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-2.0.10
-cd %{_builddir}/mosquitto-2.0.10
+%setup -q -n mosquitto-2.0.11
+cd %{_builddir}/mosquitto-2.0.11
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1617637137
+export SOURCE_DATE_EPOCH=1623251795
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -109,11 +109,11 @@ make  %{?_smp_mflags}  WITH_SYSTEMD=yes
 
 
 %install
-export SOURCE_DATE_EPOCH=1617637137
+export SOURCE_DATE_EPOCH=1623251795
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
-cp %{_builddir}/mosquitto-2.0.10/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/a8709c8c7e056d82845a30d21f075912aa8a0129
-cp %{_builddir}/mosquitto-2.0.10/epl-v20 %{buildroot}/usr/share/package-licenses/mosquitto/b086d72d0fe9af38418dab524fe76eea3cb1eec3
+cp %{_builddir}/mosquitto-2.0.11/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/a8709c8c7e056d82845a30d21f075912aa8a0129
+cp %{_builddir}/mosquitto-2.0.11/epl-v20 %{buildroot}/usr/share/package-licenses/mosquitto/b086d72d0fe9af38418dab524fe76eea3cb1eec3
 %make_install prefix=/usr LIB_SUFFIX=64
 ## install_append content
 mkdir -p %{buildroot}/usr/share/mosquitto
