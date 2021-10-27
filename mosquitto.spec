@@ -5,14 +5,14 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 2.0.12
-Release  : 44
-URL      : https://mosquitto.org/files/source/mosquitto-2.0.12.tar.gz
-Source0  : https://mosquitto.org/files/source/mosquitto-2.0.12.tar.gz
-Source1  : https://mosquitto.org/files/source/mosquitto-2.0.12.tar.gz.asc
+Version  : 2.0.13
+Release  : 45
+URL      : https://mosquitto.org/files/source/mosquitto-2.0.13.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-2.0.13.tar.gz
+Source1  : https://mosquitto.org/files/source/mosquitto-2.0.13.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
-License  : BSD-3-Clause EPL-2.0
+License  : BSD-3-Clause
 Requires: mosquitto-bin = %{version}-%{release}
 Requires: mosquitto-data = %{version}-%{release}
 Requires: mosquitto-lib = %{version}-%{release}
@@ -88,15 +88,15 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-2.0.12
-cd %{_builddir}/mosquitto-2.0.12
+%setup -q -n mosquitto-2.0.13
+cd %{_builddir}/mosquitto-2.0.13
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1630516431
+export SOURCE_DATE_EPOCH=1635376997
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -109,11 +109,10 @@ make  %{?_smp_mflags}  WITH_SYSTEMD=yes
 
 
 %install
-export SOURCE_DATE_EPOCH=1630516431
+export SOURCE_DATE_EPOCH=1635376997
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
-cp %{_builddir}/mosquitto-2.0.12/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/a8709c8c7e056d82845a30d21f075912aa8a0129
-cp %{_builddir}/mosquitto-2.0.12/epl-v20 %{buildroot}/usr/share/package-licenses/mosquitto/b086d72d0fe9af38418dab524fe76eea3cb1eec3
+cp %{_builddir}/mosquitto-2.0.13/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/86efdc5056a6e2e60451a6947ad69923744203b9
 %make_install prefix=/usr LIB_SUFFIX=64
 ## install_append content
 mkdir -p %{buildroot}/usr/share/mosquitto
@@ -161,8 +160,7 @@ rmdir %{buildroot}/etc/mosquitto %{buildroot}/etc
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/mosquitto/a8709c8c7e056d82845a30d21f075912aa8a0129
-/usr/share/package-licenses/mosquitto/b086d72d0fe9af38418dab524fe76eea3cb1eec3
+/usr/share/package-licenses/mosquitto/86efdc5056a6e2e60451a6947ad69923744203b9
 
 %files man
 %defattr(0644,root,root,0755)
