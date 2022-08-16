@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x779B22DFB3E717B7 (roger@atchoo.org)
 #
 Name     : mosquitto
-Version  : 2.0.14
-Release  : 46
-URL      : https://mosquitto.org/files/source/mosquitto-2.0.14.tar.gz
-Source0  : https://mosquitto.org/files/source/mosquitto-2.0.14.tar.gz
-Source1  : https://mosquitto.org/files/source/mosquitto-2.0.14.tar.gz.asc
+Version  : 2.0.15
+Release  : 47
+URL      : https://mosquitto.org/files/source/mosquitto-2.0.15.tar.gz
+Source0  : https://mosquitto.org/files/source/mosquitto-2.0.15.tar.gz
+Source1  : https://mosquitto.org/files/source/mosquitto-2.0.15.tar.gz.asc
 Summary  : mosquitto MQTT library (C bindings)
 Group    : Development/Tools
 License  : BSD-3-Clause
@@ -88,15 +88,15 @@ man components for the mosquitto package.
 
 
 %prep
-%setup -q -n mosquitto-2.0.14
-cd %{_builddir}/mosquitto-2.0.14
+%setup -q -n mosquitto-2.0.15
+cd %{_builddir}/mosquitto-2.0.15
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1637163496
+export SOURCE_DATE_EPOCH=1660665240
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -109,10 +109,10 @@ make  %{?_smp_mflags}  WITH_SYSTEMD=yes
 
 
 %install
-export SOURCE_DATE_EPOCH=1637163496
+export SOURCE_DATE_EPOCH=1660665240
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mosquitto
-cp %{_builddir}/mosquitto-2.0.14/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/86efdc5056a6e2e60451a6947ad69923744203b9
+cp %{_builddir}/mosquitto-%{version}/edl-v10 %{buildroot}/usr/share/package-licenses/mosquitto/86efdc5056a6e2e60451a6947ad69923744203b9
 %make_install prefix=/usr LIB_SUFFIX=64
 ## install_append content
 mkdir -p %{buildroot}/usr/share/mosquitto
